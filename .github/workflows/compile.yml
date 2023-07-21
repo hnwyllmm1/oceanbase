@@ -39,9 +39,9 @@ jobs:
         path: deps/3rd
         enableCrossOsArchive: true
 
-    - name: Cache build
+    - name: Restore cache build
       id: cache-build
-      uses: actions/cache@v3
+      uses: actions/cache/restore@v3
       env:
         cache-name: cache-build
       with:
@@ -65,5 +65,14 @@ jobs:
         cd build_debug && make -j4 && cd -
         deps/3rd/usr/local/oceanbase/devtools/bin/ccache -s
         
+    - name: Save cache build
+      if: ${{ github.ref_name == 'master' }}
+      uses: actions/cache/save@v3
+      env:
+        cache-name: cache-build
+      with:
+        key: ${{ runner.os }}-${{ env.cache-name }}-${{ matrix.image }}-el7.x86_64-${{ github.ref_name }}
+        path: ~/.ccache
+      
     - if: ${{ runner.debug }}
       run: cat $PWD/ccache.log
