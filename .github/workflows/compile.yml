@@ -59,8 +59,8 @@ jobs:
         rm -rf build_debug
         export CCACHE_LOGFILE=$PWD/ccache.log
         deps/3rd/usr/local/oceanbase/devtools/bin/ccache -z
-        bash build.sh debug -DOB_USE_CCACHE=ON
-        cd build_debug && make -j4 && cd -
+        bash build.sh debug_no_unity -DOB_USE_CCACHE=ON
+        cd debug_no_unity && make -j4 && cd -
         deps/3rd/usr/local/oceanbase/devtools/bin/ccache -s
         
     - name: Save cache build
