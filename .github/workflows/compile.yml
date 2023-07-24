@@ -45,11 +45,9 @@ jobs:
       env:
         cache-name: cache-build
       with:
-        key: ${{ runner.os }}-${{ env.cache-name }}-${{ matrix.image }}-el7.x86_64-${{ github.ref_name }}
+        key: ${{ runner.os }}-${{ env.cache-name }}-${{ matrix.image }}-el7.x86_64
         path: ~/.ccache
         enableCrossOsArchive: false
-        restore-keys: |
-          ${{ runner.os }}-${{ env.cache-name }}-${{ matrix.image }}-el7.x86_64
     
     - name: Build init
       if: steps.cache-deps.outputs.cache-hit != 'true'
@@ -71,7 +69,7 @@ jobs:
       env:
         cache-name: cache-build
       with:
-        key: ${{ runner.os }}-${{ env.cache-name }}-${{ matrix.image }}-el7.x86_64-${{ github.ref_name }}
+        key: ${{ runner.os }}-${{ env.cache-name }}-${{ matrix.image }}-el7.x86_64
         path: ~/.ccache
       
     - if: ${{ runner.debug }}
